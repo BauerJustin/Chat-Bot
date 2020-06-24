@@ -16,9 +16,8 @@ user_greetings = ['hi', 'hey', 'hello', 'hola', 'greetings', 'wassup']
 
 bot_unknown = ['Sorry, I don\'t understand.', 'I\'m confused.', 'Try again.', 'Please ask again.']
 
-user_bye = ['exit', 'bye', 'see you later', 'quit', 'cya']
 bot_bye = ['Bye for now!', 'Cya later alligator!', 'Byeeeeee :(', 'Talk to you later!', 'Please come back!', 'Ok, I see how it is...', 'Fine, get out!']
-
+user_bye = ['exit', 'bye', 'see you later', 'quit', 'cya']
 
 def get_article(url):
     # Get website from user, download and parse it to apply Natural Language Processing
@@ -52,7 +51,7 @@ def index_sort(score_list):
     
     return list_index
 
-def bot_response(user_input, sentences):
+def bot_article_response(user_input, sentences):
     user_input = user_input.lower()
     sentences.append(user_input)
     bot_response = ""
@@ -88,27 +87,33 @@ def bot_print(text):
         sys.stdout.write(char)
         sys.stdout.flush()
 
-def begin_convo():
-    bot_print("Hello There! I am your friendly chat bot.")
-    bot_print("I can answer your questions about whatever article you want!")
-    bot_print("Type bye to exit.")
-    bot_print("Paste a website you would like me to search: ")
-    url = input()
-    return get_article(url)
-
 def main():
-    sentence_list = begin_convo()
-    bot_print("Done! Ask me your questions.")
+    sentence_list = []
+    article_given = False
+
+    bot_print("Hello There! I am your friendly chat bot.")
+    
     while(True):
+
         user_input = input()
+
         if len(user_input) > 1:
             if user_input.lower() in user_bye:
                 bot_print(random.choice(bot_bye))
                 break
+            elif greeting_response(user_input, sentence_list) != None:
+                bot_print(greeting_response(user_input, sentence_list))
+            elif user_input == "done" and article_given:
+                sentence_list = []
+                article_given = False
+                bot_print("Article is no longer loaded.")
+            elif article_given:
+                bot_print(bot_article_response(user_input, sentence_list))
+            elif len(user_input) > 50 and not (' ' in user_input.strip()):
+                sentence_list = get_article(user_input.strip())
+                article_given = True
+                bot_print("Article loaded! Ask me your questions. \nType done when you don't have any more questions.")
             else:
-                if greeting_response(user_input, sentence_list) != None:
-                    bot_print(greeting_response(user_input, sentence_list))
-                else:
-                    bot_print(bot_response(user_input, sentence_list))
+                bot_print(random.choice(bot_unknown))
 
 main()
