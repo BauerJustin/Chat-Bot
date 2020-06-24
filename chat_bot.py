@@ -2,8 +2,23 @@
 from newspaper import Article
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-import random, string, nltk, numpy as np
+from time import sleep
+import sys
+import random
+import string
+import nltk
+import numpy as np
 nltk.download('punkt', quiet=True)
+
+# Bot and user text
+bot_greetings = ['Hello There!', 'hi', 'hey', 'hola']
+user_greetings = ['hi', 'hey', 'hello', 'hola', 'greetings', 'wassup']
+
+bot_unknown = ['Sorry, I don\'t understand.', 'I\'m confused.', 'Try again.', 'Please ask again.']
+
+user_bye = ['exit', 'bye', 'see you later', 'quit', 'cya']
+bot_bye = ['Bye for now!', 'Cya later alligator!', 'Byeeeeee :(', 'Talk to you later!', 'Please come back!', 'Ok, I see how it is...', 'Fine, get out!']
+
 
 def get_article(url):
     # Get website from user, download and parse it to apply Natural Language Processing
@@ -18,9 +33,6 @@ def get_article(url):
 
 def greeting_response(text, sentences):
     text = text.lower()
-
-    bot_greetings = ['Hello There!', 'hi', 'hey', 'hola']
-    user_greetings = ['hi', 'hey', 'hello', 'hola', 'greetings', 'wassup']
 
     for word in text.split():
         if word in user_greetings:
@@ -59,8 +71,6 @@ def bot_response(user_input, sentences):
             j += 1
         if j > 2:
             break
-    
-    bot_unknown = ['Sorry, I don\'t understand.', 'I\'m confused.', 'Try again.', 'Please ask again.']
 
     if response_flag == 0:
         bot_response = bot_response+' '+random.choice(bot_unknown)
@@ -69,23 +79,36 @@ def bot_response(user_input, sentences):
 
     return bot_response
 
-print("Bot: Hello There! I am your friendly chat bot.")
-print("Bot: I can answer your questions about whatever article you want!")
-print("Bot: Type bye to exit.")
-url = input("Bot: Paste a website you would like me to search: ")
-sentence_list = get_article(url)
+def bot_print(text):
+    text += "\n"
+    sys.stdout.write("Bot: ")
+    sys.stdout.flush()
+    for char in text:
+        sleep(0.03)
+        sys.stdout.write(char)
+        sys.stdout.flush()
 
-user_bye = ['exit', 'bye', 'see you later', 'quit', 'cya']
-bot_bye = ['Bye for now!', 'Cya later alligator!', 'Byeeeeee :(', 'Talk to you later!', 'Please come back!', 'Ok, I see how it is...', 'Fine, get out!']
+def begin_convo():
+    bot_print("Hello There! I am your friendly chat bot.")
+    bot_print("I can answer your questions about whatever article you want!")
+    bot_print("Type bye to exit.")
+    bot_print("Paste a website you would like me to search: ")
+    url = input()
+    return get_article(url)
 
-while(True):
-    user_input = input()
-    if len(user_input) > 1:
-        if user_input.lower() in user_bye:
-            print(random.choice(bot_bye))
-            break
-        else:
-            if greeting_response(user_input, sentence_list) != None:
-                print("Bot: "+greeting_response(user_input, sentence_list))
+def main():
+    sentence_list = begin_convo()
+    bot_print("Done! Ask me your questions.")
+    while(True):
+        user_input = input()
+        if len(user_input) > 1:
+            if user_input.lower() in user_bye:
+                bot_print(random.choice(bot_bye))
+                break
             else:
-                print("Bot: "+bot_response(user_input, sentence_list))
+                if greeting_response(user_input, sentence_list) != None:
+                    bot_print(greeting_response(user_input, sentence_list))
+                else:
+                    bot_print(bot_response(user_input, sentence_list))
+
+main()
