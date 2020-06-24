@@ -1,0 +1,15 @@
+{
+    "greeting": [
+        ["hi", "hey", "hello", "hola", "greetings", "wassup"],
+        ["Hello There!", "hi", "hey", "hola"]
+    ],
+    "farewell": [
+        ["exit", "bye", "see you later", "quit", "cya"],
+        ["Bye for now!", "Cya later alligator!", "Byeeeeee :(", "Talk to you later!", "Please come back!", "Ok, I see how it is...", "Fine, get out!"]
+    ],
+    "unknown": [
+        [],
+        ["Sorry, I don't understand.", "I'm confused.", "Try again.", "Please ask again."]
+    ]
+
+}

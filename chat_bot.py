@@ -7,17 +7,14 @@ import sys
 import random
 import string
 import nltk
+import json
 import numpy as np
 nltk.download('punkt', quiet=True)
 
-# Bot and user text
-bot_greetings = ['Hello There!', 'hi', 'hey', 'hola']
-user_greetings = ['hi', 'hey', 'hello', 'hola', 'greetings', 'wassup']
-
-bot_unknown = ['Sorry, I don\'t understand.', 'I\'m confused.', 'Try again.', 'Please ask again.']
-
-bot_bye = ['Bye for now!', 'Cya later alligator!', 'Byeeeeee :(', 'Talk to you later!', 'Please come back!', 'Ok, I see how it is...', 'Fine, get out!']
-user_bye = ['exit', 'bye', 'see you later', 'quit', 'cya']
+# load text dictionary from json file
+file = open("text.json")
+text = json.loads(file.read())
+file.close()
 
 def get_article(url):
     # Get website from user, download and parse it to apply Natural Language Processing
@@ -30,13 +27,13 @@ def get_article(url):
     sentences = nltk.sent_tokenize(article.text)
     return sentences
 
-def greeting_response(text, sentences):
-    text = text.lower()
+def greeting_response(greeting, sentences):
+    greeting = greeting.lower()
 
     # loop through all the words in the input and if any match to greeting bot will reply with a greeting
-    for word in text.split():
-        if word in user_greetings:
-            return random.choice(bot_greetings)
+    for word in greeting.split():
+        if word in text['greeting'][0]:
+            return random.choice(text['greeting'][1])
 
 def index_sort(similarity_scores_list):
     # create a list of indexes for each line in article
@@ -77,7 +74,7 @@ def bot_article_response(user_input, sentences):
 
     # if there is not match output random message stating the bot does not know
     if response_flag == 0:
-        bot_response = bot_response+' '+random.choice(bot_unknown)
+        bot_response = bot_response+' '+random.choice(text['unknown'][1])
 
     sentences.remove(user_input)
 
@@ -108,8 +105,8 @@ def main():
         # user must input non whitespace characters to get a response
         if len(user_input.strip()) > 0:
             # Case when user says bye
-            if user_input.lower() in user_bye:
-                bot_print(random.choice(bot_bye))
+            if user_input.lower() in text['farewell'][0]:
+                bot_print(random.choice(text['farewell'][1]))
                 break
             # Case when user says hello
             elif greeting_response(user_input, sentence_list) != None:
@@ -129,6 +126,6 @@ def main():
                 bot_print("Article loaded! Ask me your questions. \nType done when you don't have any more questions.")
             # Case when program does not recongize users input
             else:
-                bot_print(random.choice(bot_unknown))
+                bot_print(random.choice(text['unknown'][1]))
 
 main()
