@@ -18,6 +18,10 @@ def get_article(url):
     sentences = nltk.sent_tokenize(article.text)
     return sentences
 
+def is_article(user_input):
+    # returns true if article
+    return len(user_input) > 50 and not (' ' in user_input.strip())
+
 def index_sort(similarity_scores_list):
     # create a list of indexes for each line in article
     list_index = list(range(0,len(similarity_scores_list)))
