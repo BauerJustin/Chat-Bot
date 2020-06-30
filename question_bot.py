@@ -1,0 +1,6 @@
+
+
+
+def answerQuestion(sentence):
+    
+    return ""
