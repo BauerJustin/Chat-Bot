@@ -18,16 +18,15 @@ regex = re.compile('[%s]' % re.escape(string.punctuation))
     
 def bot_response(sentence):
     sentence = regex.sub('', sentence).lower()
-    print(sentence)
     scores = [0,0,0,0]
 
     # loop through all the words in the input and count the matches
     for word in sentence.split():
         if word in text['greeting'][0]:
             scores[0] += 1
-        elif word in text['farewell'][0]:
+        if word in text['farewell'][0]:
             scores[1] += 1
-        elif word in text['question'][0]:
+        if word in text['question'][0]:
             scores[2] += 1
     
     max_index = len(scores)-1
