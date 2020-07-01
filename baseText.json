@@ -8,7 +8,7 @@
         ["Bye for now!", "Cya later alligator!", "Byeeeeee :(", "Talk to you later!", "Please come back!", "Ok, I see how it is...", "Fine, get out!"]
     ],
     "question": [
-        ["who", "what", "when", "where", "why", "how", "who?", "what?", "when?", "where?", "why?", "how?", "what's", "whats", "hows", "how's", "who's", "whos", "whens", "when's", "where's", "wheres", "whys", "why's"],
+        ["who", "what", "when", "where", "why", "how", "whats", "hows", "whos", "whens", "wheres", "whys"],
         []
     ],
     "unknown": [

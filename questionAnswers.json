@@ -1,0 +1,10 @@
+{
+    "welcoming": [
+        ["are", "you", "doing", "up", "your", "day", "been"],
+        ["I'm great!", "I'm alright, thanks.", "Good good."]
+    ],
+    "unknown": [
+        [],
+        ["Sorry, I don't understand your question.", "Ask a different question.", "Try rephrasing your question."]
+    ]
+}

@@ -5,15 +5,20 @@ import sys
 import random
 import string
 import json
+import re
 from time import sleep
 
 # load text dictionary from json file
 file = open("baseText.json")
 text = json.loads(file.read())
 file.close()
+
+# initialize regex
+regex = re.compile('[%s]' % re.escape(string.punctuation))
     
 def bot_response(sentence):
-    sentence = sentence.lower()
+    sentence = regex.sub('', sentence).lower()
+    print(sentence)
     scores = [0,0,0,0]
 
     # loop through all the words in the input and count the matches
