@@ -46,4 +46,29 @@ def answerQuestion(sentence):
     else:
         response = random.choice(answers['unknown'][1])
 
+    # update json dictionary with new words
+    addWordsToDict(sentence, max_index)
+
     return response
+
+def addWordsToDict(sentence, index):
+    # determine key for dictionary
+    key = ""
+    if index == 0:
+        key = 'welcoming'
+    elif index == 1:
+        key = 'background'
+    elif index == 2:
+        key = 'time'
+    elif index == 3:
+        key = 'date'
+    
+    if key != "":
+        # append new words not known to dictionary
+        for word in sentence.split():
+            if word not in answers[key][0]:
+                answers[key][0].append(word)
+
+        # write changes to json file
+        with open("questionAnswers.json", 'w') as file:
+            json.dump(answers, file)

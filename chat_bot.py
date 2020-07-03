@@ -43,6 +43,9 @@ def bot_response(sentence):
     else:
         bot_print(random.choice(text['unknown'][1]))
     
+    # update json file 
+    addWordsToDict(sentence, max_index)
+
     return max_index
 
 def process_article(user_input):
@@ -62,6 +65,24 @@ def process_article(user_input):
                 bot_print("Type done first if you want to say goodbye.")
             else:
                 bot_print(abot.bot_article_response(user_input_article, sentence_list, text))
+
+def addWordsToDict(sentence, index):
+    # determine key for dictionary
+    key = ""
+    if index == 0:
+        key = 'greeting'
+    elif index == 1:
+        key = 'farewell'
+    
+    if key != "":
+        # append new words not known to dictionary
+        for word in sentence.split():
+            if word not in text[key][0]:
+                text[key][0].append(word)
+
+        # write changes to json file
+        with open("baseText.json", 'w') as file:
+            json.dump(text, file)
 
 def bot_print(sentence):
     # print bot output with 'typing' animation 
