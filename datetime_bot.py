@@ -22,4 +22,6 @@ def getTime():
     return time
 
 def getDate():
-    return ""
+    # get current date
+    today = datetime.date.today()
+    return today.strftime("%B %d, %Y")

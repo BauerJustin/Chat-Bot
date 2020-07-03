@@ -9,7 +9,11 @@
     ],
     "time": [
         ["what", "time", "is", "it", "whats", "the", "right", "now"],
-        []
+        ["The time is ", "Here's the time: "]
+    ],
+    "date": [
+        ["what", "is", "the", "date", "day", "it", "whats", "todays", "today"],
+        ["Today's date is ", "The date is ", "Today is "]
     ],
     "unknown": [
         [],

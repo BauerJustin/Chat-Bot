@@ -9,7 +9,7 @@ answers = json.loads(file.read())
 file.close()
 
 def answerQuestion(sentence):
-    scores = [0,0,0,0]
+    scores = [0,0,0,0,0]
     response = ""
 
     # loop through all the words in the sentence and count the matches
@@ -24,8 +24,11 @@ def answerQuestion(sentence):
         if word in answers['time'][0]:
             scores[2] += 1
             foundWord = True
-        if not foundWord:
+        if word in answers['date'][0]:
             scores[3] += 1
+            foundWord = True
+        if not foundWord:
+            scores[4] += 1
     
     max_index = len(scores)-1
     for i in range(max_index):
@@ -37,7 +40,9 @@ def answerQuestion(sentence):
     elif max_index == 1:
         response = random.choice(answers['background'][1])
     elif max_index == 2:
-        response = dtbot.getTime()
+        response = random.choice(answers['time'][1]) + dtbot.getTime()
+    elif max_index == 3:
+        response = random.choice(answers['date'][1]) + dtbot.getDate()
     else:
         response = random.choice(answers['unknown'][1])
 
