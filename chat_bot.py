@@ -18,7 +18,7 @@ regex = re.compile('[%s]' % re.escape(string.punctuation))
     
 def bot_response(sentence):
     sentence = regex.sub('', sentence).lower()
-    scores = [0,0,0,0]
+    scores = [0,0,0,0,0]
 
     # loop through all the words in the input and count the matches
     for word in sentence.split():
@@ -28,6 +28,8 @@ def bot_response(sentence):
             scores[1] += 1
         if word in text['question'][0]:
             scores[2] += 1
+        if word in text['article'][0]:
+            scores[3] += 1
     
     max_index = len(scores)-1
     for i in range(max_index):
@@ -40,6 +42,8 @@ def bot_response(sentence):
         bot_print(random.choice(text['farewell'][1]))
     elif max_index == 2:
         bot_print(qbot.answerQuestion(sentence))
+    elif max_index == 3:
+        bot_print(random.choice(text['article'][1]))
     else:
         bot_print(random.choice(text['unknown'][1]))
     
@@ -73,6 +77,8 @@ def addWordsToDict(sentence, index):
         key = 'greeting'
     elif index == 1:
         key = 'farewell'
+    elif index == 3:
+        key = 'article'
     
     if key != "":
         # append new words not known to dictionary

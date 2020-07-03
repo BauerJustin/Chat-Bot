@@ -20,7 +20,7 @@ def get_article(url):
 
 def is_article(user_input):
     # returns true if article
-    return len(user_input) > 50 and not (' ' in user_input.strip())
+    return len(user_input) > 25 and not (' ' in user_input.strip())
 
 def index_sort(similarity_scores_list):
     # create a list of indexes for each line in article
