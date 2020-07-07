@@ -18,7 +18,7 @@ regex = re.compile('[%s]' % re.escape(string.punctuation))
     
 def bot_response(sentence):
     sentence = regex.sub('', sentence).lower()
-    scores = [0,0,0,0,0]
+    scores = [0,0,0,0,0,0]
 
     # loop through all the words in the input and count the matches
     for word in sentence.split():
@@ -27,9 +27,11 @@ def bot_response(sentence):
         if word in text['farewell'][0]:
             scores[1] += 1
         if word in text['question'][0]:
-            scores[2] += 1
+            scores[2] += 2
         if word in text['article'][0]:
             scores[3] += 1
+        if word in text['thanks'][0]:
+            scores[4] += 1
     
     max_index = len(scores)-1
     for i in range(max_index):
@@ -44,6 +46,8 @@ def bot_response(sentence):
         bot_print(qbot.answerQuestion(sentence))
     elif max_index == 3:
         bot_print(random.choice(text['article'][1]))
+    elif max_index == 4:
+        bot_print(random.choice(text['thanks'][1]))
     else:
         bot_print(random.choice(text['unknown'][1]))
     
@@ -79,6 +83,8 @@ def addWordsToDict(sentence, index):
         key = 'farewell'
     elif index == 3:
         key = 'article'
+    elif index == 4:
+        key = 'thanks'
     
     if key != "":
         # append new words not known to dictionary
@@ -93,7 +99,7 @@ def addWordsToDict(sentence, index):
 def bot_print(sentence):
     # print bot output with 'typing' animation 
     sentence += "\n"
-    sys.stdout.write("Bot: ")
+    sys.stdout.write("ASI: ")
     sys.stdout.flush()
     for char in sentence:
         sleep(0.03)
@@ -102,7 +108,7 @@ def bot_print(sentence):
 
 def main():
 
-    bot_print("Hello There! I am your friendly chat bot.")
+    bot_print("Hello There! I am ASI, your friendly chat bot.")
     
     while(True):
 
