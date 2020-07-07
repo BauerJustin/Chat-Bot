@@ -4,7 +4,7 @@ import random
 import datetime_bot as dtbot
 
 # load answer dictionary from json file
-file = open("questionAnswers.json")
+file = open("data/questionAnswers.json")
 answers = json.loads(file.read())
 file.close()
 
@@ -70,5 +70,5 @@ def addWordsToDict(sentence, index):
                 answers[key][0].append(word)
 
         # write changes to json file
-        with open("questionAnswers.json", 'w') as file:
+        with open("data/questionAnswers.json", 'w') as file:
             json.dump(answers, file)

@@ -9,7 +9,7 @@ import re
 from time import sleep
 
 # load text dictionary from json file
-file = open("baseText.json")
+file = open("data/baseText.json")
 text = json.loads(file.read())
 file.close()
 
@@ -93,7 +93,7 @@ def addWordsToDict(sentence, index):
                 text[key][0].append(word)
 
         # write changes to json file
-        with open("baseText.json", 'w') as file:
+        with open("data/baseText.json", 'w') as file:
             json.dump(text, file)
 
 def bot_print(sentence):
