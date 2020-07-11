@@ -9,7 +9,7 @@ answers = json.loads(file.read())
 file.close()
 
 def answerQuestion(sentence):
-    scores = [0,0,0,0,0,0]
+    scores = [0,0,0,0,0,0,0]
     response = ""
 
     # loop through all the words in the sentence and count the matches
@@ -30,8 +30,11 @@ def answerQuestion(sentence):
         if word in answers['live'][0]:
             scores[4] += 1
             foundWord = True
-        if not foundWord:
+        if word in answers['gender'][0]:
             scores[5] += 1
+            foundWord = True
+        if not foundWord:
+            scores[6] += 1
     
     max_index = len(scores)-1
     for i in range(max_index):
@@ -48,6 +51,8 @@ def answerQuestion(sentence):
         response = random.choice(answers['date'][1]) + dtbot.getDate()
     elif max_index == 4:
         response = random.choice(answers['live'][1])
+    elif max_index == 5:
+        response = random.choice(answers['gender'][1])
     else:
         response = random.choice(answers['unknown'][1])
 
@@ -69,6 +74,8 @@ def addWordsToDict(sentence, index):
         key = 'date'
     elif index == 4:
         key = 'live'
+    elif index == 5:
+        key = 'gender'
     
     if key != "":
         # append new words not known to dictionary
