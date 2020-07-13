@@ -6,6 +6,7 @@ import datetime_bot as dtbot
 # load answer dictionary from json file
 file = open("data/questionAnswers.json")
 answers = json.loads(file.read())
+backup_answers = dict(answers)
 file.close()
 
 def answerQuestion(sentence):
@@ -86,3 +87,8 @@ def addWordsToDict(sentence, index):
         # write changes to json file
         with open("data/questionAnswers.json", 'w') as file:
             json.dump(answers, file)
+
+def clearQuestionsDict():
+    with open("data/questionAnswers.json", 'w') as file:
+        json.dump(backup_answers, file)
+    answers = dict(backup_answers)
