@@ -6,13 +6,11 @@ import random
 import string
 import json
 import re
-from copy import deepcopy
 from time import sleep
 
 # load text dictionary from json file
 file = open("data/baseText.json")
 text = json.loads(file.read())
-backup_text = deepcopy(text)
 file.close()
 
 # initialize regex
@@ -94,10 +92,6 @@ def addWordsToDict(sentence, index):
             if word not in text[key][0]:
                 text[key][0].append(word)
 
-    # write changes to json file
-    with open("data/baseText.json", 'w') as file:
-        json.dump(text, file)
-
 def bot_print(sentence):
     # print bot output with 'typing' animation 
     sentence += "\n"
@@ -109,6 +103,8 @@ def bot_print(sentence):
         sys.stdout.flush()
 
 def main():
+
+    clear = False
 
     bot_print("Hello There! I am ASI, your friendly chat bot.")
     
@@ -124,16 +120,18 @@ def main():
                 process_article(user_input)
             # Case to clear changes to text files
             elif user_input.strip().lower() == "clear":
-                with open("data/baseText.json", 'w') as file:
-                    json.dump(backup_text, file)
-                text = deepcopy(backup_text)
-                qbot.clearQuestionsDict()
+                clear = True
                 bot_print("Changes have been cleared!")
             # Case when algorithm determines bot response
             else:
                 index = bot_response(user_input)
                 # end convo
                 if index == 1:
+                    if not clear:
+                        # write changes to json file
+                        with open("data/baseText.json", 'w') as file:
+                            json.dump(text, file)
+                        qbot.clearQuestionsDict()
                     break
 
 if __name__ == "__main__":
