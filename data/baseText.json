@@ -109,6 +109,22 @@
             "No worries :)"
         ]
     ],
+    "help": [
+        [
+            "help",
+            "me",
+            "can",
+            "you",
+            "i",
+            "need",
+            "help"
+        ],
+        [
+            "What do you need help with?",
+            "How can I help you?",
+            "Ask me a question and I will do my best to help."
+        ]
+    ],
     "unknown": [
         [],
         [

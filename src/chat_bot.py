@@ -18,7 +18,7 @@ regex = re.compile('[%s]' % re.escape(string.punctuation))
     
 def bot_response(sentence):
     sentence = regex.sub('', sentence).lower()
-    scores = [0,0,0,0,0,0]
+    scores = [0,0,0,0,0,0,0]
 
     # loop through all the words in the input and count the matches
     for word in sentence.split():
@@ -32,6 +32,8 @@ def bot_response(sentence):
             scores[3] += 1
         if word in text['thanks'][0]:
             scores[4] += 1
+        if word in text['help'][0]:
+            scores[5] += 1
     
     max_index = len(scores)-1
     for i in range(max_index):
@@ -48,6 +50,8 @@ def bot_response(sentence):
         bot_print(random.choice(text['article'][1]))
     elif max_index == 4:
         bot_print(random.choice(text['thanks'][1]))
+    elif max_index == 5:
+        bot_print(random.choice(text['help'][1]))
     else:
         bot_print(random.choice(text['unknown'][1]))
     
@@ -85,6 +89,8 @@ def addWordsToDict(sentence, index):
         key = 'article'
     elif index == 4:
         key = 'thanks'
+    elif index == 5:
+        key = 'help'
     
     if key != "":
         # append new words not known to dictionary
